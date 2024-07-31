@@ -2,6 +2,7 @@ import { Server as NetServer } from "http";
 import { NextApiRequest } from "next";
 import { Server as ServerIO } from "socket.io";
 import { NextApiResponseServerIo } from "@/types";
+import {Socket} from "socket.io/dist/socket";
 
 export const config = {
   api: {
@@ -19,8 +20,17 @@ const ioHandler = (req: NextApiRequest, res: NextApiResponseServerIo) => {
     });
     res.socket.server.io = io;
 
-    io.on("connection", () => {
-      console.log("User connected");
+    io.on("connection", (socket: Socket) => {
+      console.log(`User connected`);
+
+      socket.on("message", (message) => {
+        console.log(message)
+        socket.broadcast.emit("message", message)
+      })
+
+      socket.on("disconnect", (reason) => {
+        console.log(`User disconnected, reason: ${reason}`)
+      })
     });
   }
 
