@@ -21,10 +21,9 @@ const ioHandler = (req: NextApiRequest, res: NextApiResponseServerIo) => {
     res.socket.server.io = io;
 
     io.on("connection", (socket: Socket) => {
-      console.log(`User connected`);
+      console.log(`User connected`, socket.id);
 
       socket.on("message", (message) => {
-        console.log(message)
         socket.broadcast.emit("message", message)
       })
 

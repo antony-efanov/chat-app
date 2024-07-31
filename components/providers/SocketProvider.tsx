@@ -7,16 +7,19 @@ import {
   useEffect,
   useState,
 } from "react";
+
 import { io as ClientIO } from "socket.io-client";
 import { Socket } from "socket.io-client";
 
 type SocketContextType = {
   socket: Socket | null;
+  clientId: string | null;
   isConnected: boolean;
 };
 
 const SocketContext = createContext<SocketContextType>({
   socket: null,
+  clientId: null,
   isConnected: false,
 });
 
@@ -26,6 +29,7 @@ export const useSocket = () => {
 
 export const SocketProvider = ({ children }: { children: ReactNode }) => {
   const [socket, setSocket] = useState(null);
+  const [clientId, setClientId] = useState(null)
   const [isConnected, setIsConnected] = useState(false);
 
   useEffect(() => {
@@ -38,6 +42,7 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
     );
 
     socketInstance.on("connect", () => {
+      setClientId(socketInstance.id)
       setIsConnected(true);
     });
 
@@ -53,7 +58,7 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
   }, []);
 
   return (
-    <SocketContext.Provider value={{ socket, isConnected }}>
+    <SocketContext.Provider value={{ socket, clientId, isConnected }}>
       {children}
     </SocketContext.Provider>
   );
