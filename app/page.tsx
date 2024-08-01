@@ -6,6 +6,8 @@ import {Textarea} from "@/components/ui/textarea";
 import {Button} from "@/components/ui/button";
 import {Badge} from "@/components/ui/badge";
 import {cn} from "@/lib/utils";
+import {Dialog, DialogContent, DialogTrigger} from "@/components/ui/dialog";
+import {useDraggable} from "@dnd-kit/core";
 
 type Message = {
     text: string;
@@ -95,6 +97,7 @@ export default function Home() {
                     className="border-blue-300"
                     placeholder="Булкозавр..."
                 />
+                <DraggableDialog/>
                 <Button
                     onClick={sendMessage}
                     variant="default"
@@ -105,4 +108,28 @@ export default function Home() {
             </div>
         </main>
     );
+}
+
+const DraggableDialog = () => {
+    const {attributes, listeners, setNodeRef, transform} = useDraggable({
+        id: 'unique-id',
+    });
+    const style = {
+        transform: CSS.Translate.toString(transform),
+    };
+
+    return <Dialog>
+        <DialogTrigger asChild>
+            <Button
+                variant="default"
+                className="w-20 flex-shrink-0 bg-emerald-500 hover:bg-emerald-400"
+            >
+                Shop
+            </Button>
+        </DialogTrigger>
+        <DialogContent ref={setNodeRef} style={style} {...listeners} {...attributes}>
+            Hello world
+        </DialogContent>
+    </Dialog>
+
 }
