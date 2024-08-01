@@ -8,6 +8,7 @@ import {Badge} from "@/components/ui/badge";
 import {cn} from "@/lib/utils";
 import {Dialog, DialogContent, DialogTrigger} from "@/components/ui/dialog";
 import {useDraggable} from "@dnd-kit/core";
+import {CSS} from "@dnd-kit/utilities"
 
 type Message = {
     text: string;
@@ -118,7 +119,7 @@ const DraggableDialog = () => {
         transform: CSS.Translate.toString(transform),
     };
 
-    return <Dialog>
+    return <Dialog modal>
         <DialogTrigger asChild>
             <Button
                 variant="default"
