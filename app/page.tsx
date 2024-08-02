@@ -6,7 +6,7 @@ import {Textarea} from "@/components/ui/textarea";
 import {Button} from "@/components/ui/button";
 import {Badge} from "@/components/ui/badge";
 import {cn} from "@/lib/utils";
-import {Dialog, DialogContent, DialogTrigger} from "@/components/ui/dialog";
+import {Dialog, DialogContent, DialogTitle, DialogTrigger} from "@/components/ui/dialog";
 import {useDraggable} from "@dnd-kit/core";
 import {CSS} from "@dnd-kit/utilities"
 
@@ -129,7 +129,7 @@ const DraggableDialog = () => {
             </Button>
         </DialogTrigger>
         <DialogContent ref={setNodeRef} style={style} {...listeners} {...attributes}>
-            Hello world
+            <DialogTitle>Hello world</DialogTitle>
         </DialogContent>
     </Dialog>
 
