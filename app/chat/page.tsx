@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
-import { cn } from "@/lib/utils";
+import { cn } from "@/utils/cn";
 import { useSocket } from "@/infrastructure/providers/SocketProvider";
 import { Badge } from "@/components/ui/badge";
 import { Textarea } from "@/components/ui/textarea";
@@ -68,6 +68,17 @@ export default function Chat() {
           {isConnected ? "Connected" : "Not connected"}
         </Badge>
         <SignOut />
+        <div>
+          <form action="./api/db/data" method="post">
+            <label htmlFor="name">Enter Name </label>
+            <input type="text" name="name" id="name" />
+
+            <label htmlFor="age"> Enter Age </label>
+            <input type="text" name="age" id="age" />
+
+            <input type="submit" value="submit" />
+          </form>
+        </div>
       </div>
       <div
         style={{ float: "left", clear: "both" }}
