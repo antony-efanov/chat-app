@@ -29,7 +29,7 @@ export const useSocket = () => {
 
 export const SocketProvider = ({ children }: { children: ReactNode }) => {
   const [socket, setSocket] = useState(null);
-  const [clientId, setClientId] = useState(null)
+  const [clientId, setClientId] = useState(null);
   const [isConnected, setIsConnected] = useState(false);
 
   useEffect(() => {
@@ -42,7 +42,7 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
     );
 
     socketInstance.on("connect", () => {
-      setClientId(socketInstance.id)
+      setClientId(socketInstance.id);
       setIsConnected(true);
     });
 
