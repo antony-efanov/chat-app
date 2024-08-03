@@ -6,6 +6,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
+import { SignIn } from "@/components/SignIn";
 
 type Message = {
   text: string;
@@ -65,6 +66,7 @@ export default function Home() {
       >
         {isConnected ? "Connected" : "Not connected"}
       </Badge>
+      <SignIn />
       <div
         style={{ float: "left", clear: "both" }}
         className="flex flex-col gap-2 mb-auto mt-8 w-full h-96 overflow-y-auto border p-4 rounded-2xl border-blue-300"
