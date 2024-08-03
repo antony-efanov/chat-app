@@ -6,6 +6,7 @@ import { useSocket } from "@/infrastructure/providers/SocketProvider";
 import { Badge } from "@/components/ui/badge";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
+import { SignOut } from "@/components/SignOut";
 
 type Message = {
   text: string;
@@ -55,16 +56,19 @@ export default function Chat() {
 
   return (
     <main className="flex min-h-screen flex-col justify-between p-4">
-      <Badge
-        className={cn(
-          "select-none w-fit",
-          isConnected
-            ? "bg-green-800 hover:bg-green-800 "
-            : "bg-yellow-700 hover:bg-yellow-700 ",
-        )}
-      >
-        {isConnected ? "Connected" : "Not connected"}
-      </Badge>
+      <div className="flex items-center justify-between">
+        <Badge
+          className={cn(
+            "select-none w-fit",
+            isConnected
+              ? "bg-green-800 hover:bg-green-800 "
+              : "bg-yellow-700 hover:bg-yellow-700 ",
+          )}
+        >
+          {isConnected ? "Connected" : "Not connected"}
+        </Badge>
+        <SignOut />
+      </div>
       <div
         style={{ float: "left", clear: "both" }}
         className="flex flex-col gap-2 mb-auto mt-8 w-full h-96 overflow-y-auto border p-4 rounded-2xl border-blue-300"

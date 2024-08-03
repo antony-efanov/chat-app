@@ -1,4 +1,4 @@
-import { signInGoogle } from "@/components/signInWithGoogle";
+import { signInGoogle } from "@/actions/signInWithGoogle";
 
 export function SignIn() {
   return (
