@@ -6,7 +6,6 @@ import { useSocket } from "@/infrastructure/providers/SocketProvider";
 import { Badge } from "@/components/ui/badge";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
-import { SignOut } from "@/components/SignOut";
 
 type Message = {
   text: string;
@@ -67,7 +66,6 @@ export default function Chat() {
         >
           {isConnected ? "Connected" : "Not connected"}
         </Badge>
-        <SignOut />
         <div>
           <form action="./api/db/data" method="post">
             <label htmlFor="name">Enter Name </label>
