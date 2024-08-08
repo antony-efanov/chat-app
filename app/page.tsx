@@ -1,10 +1,14 @@
+"use client";
+
 import React from "react";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
+  const router = useRouter();
+
   return (
     <main className="flex h-screen">
-      <section className="flex-1 bg-amber-50"></section>
-      <section className="flex flex-1 justify-center items-center"></section>
+      <button onClick={() => router.push("/auth/login")}>Sign in</button>
     </main>
   );
 }

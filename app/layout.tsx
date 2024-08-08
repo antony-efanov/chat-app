@@ -14,7 +14,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={cn(inter.className, "h-full")}>
+      <body className={cn(inter.className, "h-screen")}>
         <SessionProvider>
           <SocketProvider>{children}</SocketProvider>
         </SessionProvider>
