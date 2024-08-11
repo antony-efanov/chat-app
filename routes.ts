@@ -6,7 +6,7 @@ export const publicRoutes = ["/"];
 /**
  * Routes that are used for authentication
  */
-export const authRoutes = [];
+export const authRoutes = ["/auth/login", "/auth/register"];
 
 /**
  * The prefix for api authentication routes
