@@ -4,18 +4,21 @@ import { Inter } from "next/font/google";
 import { SocketProvider } from "@/infrastructure/providers/SocketProvider";
 import { SessionProvider } from "next-auth/react";
 import { cn } from "@/lib/cn";
+import { auth } from "@/auth";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: ReactNode;
 }>) {
+  const session = await auth();
+
   return (
     <html lang="en">
       <body className={cn(inter.className, "h-screen")}>
-        <SessionProvider>
+        <SessionProvider session={session}>
           <SocketProvider>{children}</SocketProvider>
         </SessionProvider>
       </body>

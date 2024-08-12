@@ -66,17 +66,6 @@ export default function Chat() {
         >
           {isConnected ? "Connected" : "Not connected"}
         </Badge>
-        <div>
-          <form action="./api/db/data" method="post">
-            <label htmlFor="name">Enter Name </label>
-            <input type="text" name="name" id="name" />
-
-            <label htmlFor="age"> Enter Age </label>
-            <input type="text" name="age" id="age" />
-
-            <input type="submit" value="submit" />
-          </form>
-        </div>
       </div>
       <div
         style={{ float: "left", clear: "both" }}
