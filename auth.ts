@@ -8,15 +8,15 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   pages: {
     signIn: "/auth/login",
   },
-  events: {
-    async linkAccount({ user }) {
-      //@ts-ignore
-      await db.user.update({
-        where: { id: user.id },
-        data: { emailVerified: new Date() },
-      });
-    },
-  },
+  // TODO: Complete when do email verification
+  // events: {
+  //   async linkAccount({ user }) {
+  //     await db.user.update({
+  //       where: { id: user.id },
+  //       data: { emailVerified: new Date() },
+  //     });
+  //   },
+  // },
   callbacks: {
     async signIn({ user, account }) {
       if (account?.provider !== "credentials") return true;
@@ -44,6 +44,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       const existingUser = await getUserById(token.sub);
 
       if (!existingUser) return token;
+      // @ts-ignore
       token.role = existingUser.role;
 
       return token;
