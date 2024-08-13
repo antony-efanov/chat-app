@@ -9,3 +9,16 @@ declare module "next-auth" {
     user: ExtendedUser;
   }
 }
+
+declare module "@auth/core/jwt" {
+  interface JWT {
+    id: string;
+    role: ExtendedUser["role"];
+  }
+}
+
+declare module "@auth/core/adapters" {
+  interface AdapterUser {
+    role: ExtendedUser["role"];
+  }
+}
