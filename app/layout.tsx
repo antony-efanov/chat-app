@@ -1,7 +1,6 @@
 import { ReactNode } from "react";
 import "./globals.css";
 import { Inter } from "next/font/google";
-import { SocketProvider } from "@/infrastructure/providers/SocketProvider";
 import { SessionProvider } from "next-auth/react";
 import { cn } from "@/lib/cn";
 import { auth } from "@/auth";
@@ -18,9 +17,7 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body className={cn(inter.className, "h-screen")}>
-        <SessionProvider session={session}>
-          <SocketProvider>{children}</SocketProvider>
-        </SessionProvider>
+        <SessionProvider session={session}>{children}</SessionProvider>
       </body>
     </html>
   );
