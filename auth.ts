@@ -44,7 +44,6 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       const existingUser = await getUserById(token.sub);
 
       if (!existingUser) return token;
-      // @ts-ignore
       token.role = existingUser.role;
 
       return token;
