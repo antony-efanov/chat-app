@@ -5,10 +5,10 @@ import bcrypt from "bcryptjs";
 import { IRegisterSchema, RegisterSchema } from "@/schemas";
 import { db } from "@/lib/db";
 import { getUserByEmail } from "@/data/user";
-import { generateVerificationToken } from "@/lib/tokens";
-import { sendVerificationEmail } from "@/lib/mail";
 
-export const register = async (values: IRegisterSchema) => {
+export const register = async (
+  values: IRegisterSchema,
+): Promise<{ error?: string } | { success?: string }> => {
   const validatedFields = RegisterSchema.safeParse(values);
 
   if (!validatedFields.success) {
@@ -32,8 +32,9 @@ export const register = async (values: IRegisterSchema) => {
     },
   });
 
-  const verificationToken = await generateVerificationToken(email);
-  await sendVerificationEmail(verificationToken.email, verificationToken.token);
+  // TODO: Complete when do email verification
+  // const verificationToken = await generateVerificationToken(email);
+  // await sendVerificationEmail(verificationToken.email, verificationToken.token);
 
   return { success: "Confirmation email sent" };
 };

@@ -15,14 +15,10 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { FormError } from "@/components/form-error";
-import { FormSuccess } from "@/components/form-succes";
-import { useState, useTransition } from "react";
+import { useTransition } from "react";
 import { register } from "@/actions/register";
 
 export const RegisterForm = () => {
-  const [error, setError] = useState<string | undefined>("");
-  const [success, setSuccess] = useState<string | undefined>("");
   const [isPending, startTransition] = useTransition();
   const form = useForm<IRegisterSchema>({
     resolver: zodResolver(RegisterSchema),
@@ -34,14 +30,8 @@ export const RegisterForm = () => {
   });
 
   const onSubmit = (values: IRegisterSchema) => {
-    setError("");
-    setSuccess("");
-
     startTransition(() => {
-      register(values).then((data) => {
-        setError(data.error);
-        setSuccess(data.success);
-      });
+      register(values);
     });
   };
 
@@ -63,8 +53,12 @@ export const RegisterForm = () => {
                   <FormLabel>Name</FormLabel>
                   <FormControl>
                     <Input
-                      disabled={isPending}
-                      {...field}
+                      disabled={isPending || field.disabled}
+                      onBlur={field.onBlur}
+                      name={field.name}
+                      value={field.value}
+                      onChange={field.onChange}
+                      ref={field.ref}
                       type="text"
                       placeholder="John Doe"
                     />
@@ -81,8 +75,12 @@ export const RegisterForm = () => {
                   <FormLabel>Email</FormLabel>
                   <FormControl>
                     <Input
-                      disabled={isPending}
-                      {...field}
+                      disabled={isPending || field.disabled}
+                      onBlur={field.onBlur}
+                      name={field.name}
+                      value={field.value}
+                      onChange={field.onChange}
+                      ref={field.ref}
                       type="email"
                       placeholder="johndoe@example.com"
                     />
@@ -99,8 +97,12 @@ export const RegisterForm = () => {
                   <FormLabel>Password</FormLabel>
                   <FormControl>
                     <Input
-                      disabled={isPending}
-                      {...field}
+                      disabled={isPending || field.disabled}
+                      onBlur={field.onBlur}
+                      name={field.name}
+                      value={field.value}
+                      onChange={field.onChange}
+                      ref={field.ref}
                       type="password"
                       placeholder="******"
                     />
@@ -110,8 +112,6 @@ export const RegisterForm = () => {
               )}
             />
           </div>
-          <FormError message={error} />
-          <FormSuccess message={success} />
           <Button
             disabled={isPending}
             variant="default"
