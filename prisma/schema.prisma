@@ -27,6 +27,7 @@ model User {
   password      String?
   role          UserRole  @default(USER)
   accounts      Account[]
+  roomId        String?
 
   @@map("users")
 }
@@ -58,4 +59,13 @@ model VerificationToken {
   expires DateTime
 
   @@unique([email, token])
+}
+
+model Room {
+  id        String  @id @default(cuid())
+  ownerId   String  @map("user_id")
+  title     String
+  isPrivate Boolean @default(false)
+
+  @@map("rooms")
 }

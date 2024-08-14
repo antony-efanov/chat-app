@@ -15,12 +15,10 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { FormError } from "@/components/form-error";
 import { login } from "@/actions/login";
-import { useState, useTransition } from "react";
+import { useTransition } from "react";
 
 export const LoginForm = () => {
-  const [error, setError] = useState<string | undefined>("");
   const [isPending, startTransition] = useTransition();
   const form = useForm<ILoginSchema>({
     resolver: zodResolver(LoginSchema),
@@ -31,12 +29,8 @@ export const LoginForm = () => {
   });
 
   const onSubmit = (values: ILoginSchema) => {
-    setError("");
-
     startTransition(() => {
-      login(values).then((data) => {
-        setError(data?.error);
-      });
+      login(values);
     });
   };
 
@@ -87,7 +81,6 @@ export const LoginForm = () => {
               )}
             />
           </div>
-          <FormError message={error} />
           <Button
             disabled={isPending}
             variant="default"

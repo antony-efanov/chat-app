@@ -1,7 +1,7 @@
 /**
  * Routes that does not require authentication
  */
-export const publicRoutes = ["/"];
+export const publicRoutes = [];
 
 /**
  * Routes that are used for authentication
@@ -14,4 +14,4 @@ export const authRoutes = ["/auth/login", "/auth/register"];
  */
 export const apiAuthPrefix = "/api/auth";
 
-export const DEFAULT_LOGIN_REDIRECT = "/settings";
+export const DEFAULT_LOGIN_REDIRECT = "/chat";
