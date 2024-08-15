@@ -5,13 +5,11 @@ import { LoginSchema } from "@/schemas";
 import { getUserByEmail } from "@/data/user";
 import Google from "@auth/core/providers/google";
 
-//@ts-ignore
 export default {
   providers: [
     Google({
       clientId: process.env.AUTH_GOOGLE_ID,
       clientSecret: process.env.AUTH_GOOGLE_SECRET,
-      redirectProxyUrl: "https://chat-app-production-f12a.up.railway.app/auth/callback/google"
     }),
     Credentials({
       async authorize(credentials) {
