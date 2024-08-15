@@ -6,6 +6,8 @@ import { useSocket } from "@/infrastructure/providers/SocketProvider";
 import { Badge } from "@/components/ui/badge";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
+import { signOut } from "next-auth/react";
+import { useCurrentUser } from "@/hooks/use-current-user";
 
 type Message = {
   text: string;
@@ -13,26 +15,32 @@ type Message = {
 };
 
 const isMyMessage = (
-  myClientId: string | null,
+  myClientId: string | undefined,
   messageClientId: string,
 ): boolean => {
   return myClientId === messageClientId;
 };
 
 export default function Chat() {
-  const messagesEndRef = useRef(null);
+  const messagesRef = useRef<HTMLDivElement | null>(null);
   const [messages, setMessages] = useState<Message[]>([]);
   const [value, setValue] = useState("");
-  const { socket, clientId, isConnected } = useSocket();
+  const { socket, isConnected } = useSocket();
+  const user = useCurrentUser();
 
   const scrollToBottom = () => {
-    // @ts-ignore
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    if ("scrollTop" in messagesRef.current) {
+      console.log(
+        messagesRef.current.scrollTop,
+        messagesRef.current?.scrollHeight,
+      );
+      messagesRef.current.scrollTop = messagesRef.current?.scrollHeight;
+    }
   };
 
   const sendMessage = () => {
     // @ts-ignore
-    const newMessage: Message = { text: value, clientId };
+    const newMessage: Message = { text: value, clientId: user?.id };
     // @ts-ignore
     socket.emit("message", newMessage);
     setMessages((prev) => [...prev, newMessage]);
@@ -66,27 +74,23 @@ export default function Chat() {
         >
           {isConnected ? "Connected" : "Not connected"}
         </Badge>
+        <Button onClick={() => signOut({ callbackUrl: "/auth/login" })}>
+          Sign out
+        </Button>
       </div>
       <div
+        ref={messagesRef}
         style={{ float: "left", clear: "both" }}
-        className="flex flex-col gap-2 mb-auto mt-8 w-full h-96 overflow-y-auto border p-4 rounded-2xl border-blue-300"
+        className="flex flex-col gap-2 mb-auto mt-8 w-full h-96 overflow-y-auto border p-4 rounded-xl border-blue-300"
       >
         {messages.map((message, index) => {
           return (
-            <div
-              key={index}
-              className={cn(
-                "flex w-fit text-white bg-gray-700 p-2 rounded-md",
-                isMyMessage(clientId, message.clientId)
-                  ? "bg-green-900 ml-auto"
-                  : "bg-gray-700",
-              )}
-            >
-              {message.text}
+            <div key={index}>
+              <b>{user?.name}: </b>
+              <span>{message.text}</span>
             </div>
           );
         })}
-        <div ref={messagesEndRef} />
       </div>
       <div className="flex w-full gap-4">
         <Textarea
