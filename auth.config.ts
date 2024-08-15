@@ -5,7 +5,6 @@ import { LoginSchema } from "@/schemas";
 import { getUserByEmail } from "@/data/user";
 import Google from "@auth/core/providers/google";
 
-//@ts-ignore
 export default {
   providers: [
     Google({
