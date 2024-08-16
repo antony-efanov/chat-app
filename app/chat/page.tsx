@@ -29,11 +29,7 @@ export default function Chat() {
   const user = useCurrentUser();
 
   const scrollToBottom = () => {
-    if ("scrollTop" in messagesRef.current) {
-      console.log(
-        messagesRef.current.scrollTop,
-        messagesRef.current?.scrollHeight,
-      );
+    if (messagesRef?.current) {
       messagesRef.current.scrollTop = messagesRef.current?.scrollHeight;
     }
   };
