@@ -41,8 +41,10 @@ export default function Chat() {
   const scrollToBottom = () => {
     if (messagesRef?.current) {
       setTimeout(() => {
-        messagesRef.current.scrollTop =
-            messagesRef.current.scrollHeight - messagesRef.current.clientHeight;
+        if (messagesRef.current) {
+          messagesRef.current.scrollTop =
+              messagesRef?.current.scrollHeight - messagesRef?.current.clientHeight;
+        }
       }, 0);
     }
   };
