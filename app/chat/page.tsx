@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState} from "react";
 import { cn } from "@/lib/cn";
 import { useSocket } from "@/infrastructure/providers/SocketProvider";
 import { Badge } from "@/components/ui/badge";
@@ -14,9 +14,11 @@ type Message = {
   clientId: string;
 };
 
+const colors = ["text-yellow-500", "text-orange-500", "text-red-500", "text-lime-500", "text-green-500"]
+
 const isMyMessage = (
-  myClientId: string | undefined,
-  messageClientId: string,
+    myClientId: string | undefined,
+    messageClientId: string,
 ): boolean => {
   return myClientId === messageClientId;
 };
@@ -28,9 +30,20 @@ export default function Chat() {
   const { socket, isConnected } = useSocket();
   const user = useCurrentUser();
 
+  const randomColor = useMemo(() => {
+    return colors[Math.floor(Math.random() * colors.length)];
+  }, [])
+
+  const randomColor2 = useMemo(() => {
+    return colors[Math.floor(Math.random() * colors.length)];
+  }, [])
+
   const scrollToBottom = () => {
     if (messagesRef?.current) {
-      messagesRef.current.scrollTop = messagesRef.current?.scrollHeight;
+      setTimeout(() => {
+        messagesRef.current.scrollTop =
+            messagesRef.current.scrollHeight - messagesRef.current.clientHeight;
+      }, 0);
     }
   };
 
@@ -77,12 +90,12 @@ export default function Chat() {
       <div
         ref={messagesRef}
         style={{ float: "left", clear: "both" }}
-        className="flex flex-col gap-2 mb-auto mt-8 w-full h-96 overflow-y-auto border p-4 rounded-xl border-blue-300"
+        className="flex  flex-col gap-2 mb-auto mt-8 w-full h-96 overflow-y-auto border p-4 rounded-xl border-blue-300"
       >
         {messages.map((message, index) => {
           return (
             <div key={index}>
-              <b>{user?.name}: </b>
+              <b className={isMyMessage(user?.id, message.clientId) ? randomColor : randomColor2}>{user?.name}: </b>
               <span>{message.text}</span>
             </div>
           );
@@ -99,14 +112,14 @@ export default function Chat() {
         />
         <Button
           variant="default"
-          className="w-20 flex-shrink-0 bg-emerald-500 hover:bg-emerald-400"
+          className="h-[60px] w-20 flex-shrink-0 bg-emerald-500 hover:bg-emerald-400"
         >
           Shop
         </Button>
         <Button
           onClick={sendMessage}
           variant="default"
-          className="w-20 flex-shrink-0"
+          className="h-[60px] w-20 flex-shrink-0"
         >
           Send
         </Button>
