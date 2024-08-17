@@ -5,7 +5,6 @@ import { ILoginSchema, LoginSchema } from "@/schemas";
 import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
 import { AuthError } from "next-auth";
 import { getUserByEmail } from "@/data/user";
-import { getSystemRooms } from "@/data/room";
 
 export const login = async (values: ILoginSchema) => {
   const validatedFields = LoginSchema.safeParse(values);
@@ -35,10 +34,6 @@ export const login = async (values: ILoginSchema) => {
   //
   //   return { success: "Confirmation email sent!" };
   // }
-
-  const rooms = await getSystemRooms();
-
-  console.log(rooms);
 
   try {
     await signIn("credentials", {

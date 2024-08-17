@@ -2,13 +2,7 @@ import { db } from "@/lib/db";
 
 export const getSystemRooms = async () => {
   try {
-    await db.room.findMany({
-      where: {
-        id: {
-          startsWith: "system",
-        },
-      },
-    });
+    await db.room.findFirst();
   } catch {
     return null;
   }

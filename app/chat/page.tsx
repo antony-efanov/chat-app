@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useMemo, useRef, useState} from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { cn } from "@/lib/cn";
 import { useSocket } from "@/infrastructure/providers/SocketProvider";
 import { Badge } from "@/components/ui/badge";
@@ -8,17 +8,24 @@ import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { signOut } from "next-auth/react";
 import { useCurrentUser } from "@/hooks/use-current-user";
+import { RoomsDialog } from "@/app/chat/_components/rooms-dialog";
 
 type Message = {
   text: string;
   clientId: string;
 };
 
-const colors = ["text-yellow-500", "text-orange-500", "text-red-500", "text-lime-500", "text-green-500"]
+const colors = [
+  "text-yellow-500",
+  "text-orange-500",
+  "text-red-500",
+  "text-lime-500",
+  "text-green-500",
+];
 
 const isMyMessage = (
-    myClientId: string | undefined,
-    messageClientId: string,
+  myClientId: string | undefined,
+  messageClientId: string,
 ): boolean => {
   return myClientId === messageClientId;
 };
@@ -32,18 +39,19 @@ export default function Chat() {
 
   const randomColor = useMemo(() => {
     return colors[Math.floor(Math.random() * colors.length)];
-  }, [])
+  }, []);
 
   const randomColor2 = useMemo(() => {
     return colors[Math.floor(Math.random() * colors.length)];
-  }, [])
+  }, []);
 
   const scrollToBottom = () => {
     if (messagesRef?.current) {
       setTimeout(() => {
         if (messagesRef.current) {
           messagesRef.current.scrollTop =
-              messagesRef?.current.scrollHeight - messagesRef?.current.clientHeight;
+            messagesRef?.current.scrollHeight -
+            messagesRef?.current.clientHeight;
         }
       }, 0);
     }
@@ -97,7 +105,15 @@ export default function Chat() {
         {messages.map((message, index) => {
           return (
             <div key={index}>
-              <b className={isMyMessage(user?.id, message.clientId) ? randomColor : randomColor2}>{user?.name}: </b>
+              <b
+                className={
+                  isMyMessage(user?.id, message.clientId)
+                    ? randomColor
+                    : randomColor2
+                }
+              >
+                {user?.name}:{" "}
+              </b>
               <span>{message.text}</span>
             </div>
           );
@@ -112,12 +128,7 @@ export default function Chat() {
           className="border-blue-300"
           placeholder="Булкозавр..."
         />
-        <Button
-          variant="default"
-          className="h-[60px] w-20 flex-shrink-0 bg-emerald-500 hover:bg-emerald-400"
-        >
-          Shop
-        </Button>
+        <RoomsDialog />
         <Button
           onClick={sendMessage}
           variant="default"
