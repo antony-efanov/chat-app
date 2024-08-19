@@ -6,6 +6,7 @@ import {
   authRoutes,
   publicRoutes,
 } from "@/routes";
+import { getDefaultRoomId } from "@/actions/getDefaultRoomId";
 
 const { auth } = NextAuth(authConfig);
 
@@ -21,7 +22,8 @@ export default auth((req) => {
 
   if (isAuthRoute) {
     if (isLoggedIn) {
-      return Response.redirect(new URL(DEFAULT_LOGIN_REDIRECT, nextUrl));
+      const roomId = getDefaultRoomId();
+      return Response.redirect(new URL(`/${roomId}`, nextUrl));
     }
     return undefined;
   }

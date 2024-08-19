@@ -5,6 +5,7 @@ import { ILoginSchema, LoginSchema } from "@/schemas";
 import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
 import { AuthError } from "next-auth";
 import { getUserByEmail } from "@/data/user";
+import { getDefaultRoomId } from "@/actions/getDefaultRoomId";
 
 export const login = async (values: ILoginSchema) => {
   const validatedFields = LoginSchema.safeParse(values);
@@ -35,11 +36,13 @@ export const login = async (values: ILoginSchema) => {
   //   return { success: "Confirmation email sent!" };
   // }
 
+  const roomId = await getDefaultRoomId();
+
   try {
     await signIn("credentials", {
       email,
       password,
-      redirectTo: DEFAULT_LOGIN_REDIRECT,
+      redirectTo: `/${roomId}`,
     });
   } catch (error) {
     if (error instanceof AuthError) {
