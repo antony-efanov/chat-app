@@ -1,7 +1,6 @@
 "use server";
 
 import bcrypt from "bcryptjs";
-
 import { IRegisterSchema, RegisterSchema } from "@/schemas";
 import { db } from "@/lib/db";
 import { getUserByEmail } from "@/data/user";

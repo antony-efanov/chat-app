@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef, forwardRef } from "react";
+import React, { forwardRef } from "react";
 import { useCurrentUser } from "@/hooks/use-current-user";
 import { Message } from "@/types/Message";
 
@@ -16,7 +16,7 @@ export const Chat = forwardRef<HTMLDivElement, { messages: Message[] }>(
       >
         {messages.map((message, index) => (
           <div key={index}>
-            <b>{user.name}: </b>
+            <b>{user?.name}: </b>
             <span>{message.text}</span>
           </div>
         ))}

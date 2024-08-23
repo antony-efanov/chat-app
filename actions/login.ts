@@ -2,7 +2,6 @@
 
 import { signIn } from "@/auth";
 import { ILoginSchema, LoginSchema } from "@/schemas";
-import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
 import { AuthError } from "next-auth";
 import { getUserByEmail } from "@/data/user";
 import { getDefaultRoomId } from "@/actions/getDefaultRoomId";

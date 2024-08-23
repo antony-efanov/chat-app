@@ -1,8 +1,15 @@
 import { useSession } from "next-auth/react";
-import { User } from "@prisma/client";
 
-export const useCurrentUser = (): User => {
-  const session = useSession();
+interface SessionUser {
+  id: string;
+  name?: string | null;
+  email?: string | null;
+}
 
-  return session.data.user ?? {};
+export const useCurrentUser = (): SessionUser | null => {
+  const { data: session } = useSession();
+
+  const user = session?.user as SessionUser;
+
+  return user ?? {};
 };

@@ -22,8 +22,13 @@ export default function Room() {
   const params = useParams();
 
   useEffect(() => {
-    socket?.emit("room joined", { roomId: params.roomId, user });
-  }, []);
+    const roomId = Array.isArray(params.roomId)
+      ? params.roomId[0]
+      : params.roomId;
+    if (roomId) {
+      socket?.emit("room joined", { roomId, user });
+    }
+  }, [params.roomId, socket, user]);
 
   const scrollToBottom = () => {
     if (messagesRef?.current) {
