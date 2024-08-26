@@ -10,16 +10,17 @@ import {
 
 import { io as ClientIO } from "socket.io-client";
 import { Socket } from "socket.io-client";
+import {ClientToServerEvents, ServerToClientEvents} from "@/types/Socket";
 
 type SocketContextType = {
-  socket: Socket | null;
-  clientId: string | null;
+  socket: Socket<ServerToClientEvents, ClientToServerEvents> | null;
+  clientId: string | undefined;
   isConnected: boolean;
 };
 
 const SocketContext = createContext<SocketContextType>({
   socket: null,
-  clientId: null,
+  clientId: undefined,
   isConnected: false,
 });
 
@@ -29,11 +30,11 @@ export const useSocket = (): SocketContextType => {
 
 export const SocketProvider = ({ children }: { children: ReactNode }) => {
   const [socket, setSocket] = useState<Socket>(null);
-  const [clientId, setClientId] = useState(null);
+  const [clientId, setClientId] = useState<string | undefined>(undefined);
   const [isConnected, setIsConnected] = useState(false);
 
   useEffect(() => {
-    const socketInstance = new (ClientIO as any)(
+    const socketInstance = ClientIO(
       process.env.NEXT_PUBLIC_SITE_URL!,
       {
         path: "/api/socket/io",

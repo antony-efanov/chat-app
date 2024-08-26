@@ -5,6 +5,7 @@ import { NextApiResponseServerIo } from "@/types";
 import { Socket } from "socket.io/dist/socket";
 import { Room } from "@/types/Room";
 import { Message } from "@/types/Message";
+import { ClientToServerEvents, ServerToClientEvents } from "@/types/Socket";
 
 export const config = {
   api: {
@@ -18,14 +19,22 @@ const ioHandler = (req: NextApiRequest, res: NextApiResponseServerIo) => {
   if (!res.socket.server.io) {
     const path = "/api/socket/io";
     const httpServer: NetServer = res.socket.server as any;
-    const io: ServerIO = new ServerIO(httpServer, {
+    const io: ServerIO<ClientToServerEvents, ServerToClientEvents, {}, any> = new ServerIO<ClientToServerEvents, ServerToClientEvents>(httpServer, {
       path: path,
       addTrailingSlash: false,
     });
     res.socket.server.io = io;
 
+    io.engine.on("connection", (rawSocket) => {
+      rawSocket.request = null;
+    });
+
     // Authorized user joins any chat room
     io.on("connection", (socket: Socket) => {
+      socket.on("hello", ({}) => {
+
+      })
+
       socket.on("room joined", ({ roomId, user }) => {
         const existingRoom = rooms.find((room) => room.id === roomId);
 
