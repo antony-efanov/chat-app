@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import { cn } from "@/lib/cn";
+import { cn } from "@/lib/utils/cn";
 import { useSocket } from "@/infrastructure/providers/SocketProvider";
 import { Badge } from "@/components/ui/badge";
 import { Textarea } from "@/components/ui/textarea";
@@ -22,13 +22,13 @@ export default function Room() {
   const params = useParams();
 
   useEffect(() => {
-    const roomId = Array.isArray(params.roomId)
-      ? params.roomId[0]
-      : params.roomId;
+    const roomId = Array.isArray(params?.roomId)
+      ? params?.roomId[0]
+      : params?.roomId;
     if (roomId) {
       socket?.emit("room joined", { roomId, user });
     }
-  }, [params.roomId, socket, user]);
+  }, [params?.roomId, socket, user]);
 
   const scrollToBottom = () => {
     if (messagesRef?.current) {
@@ -55,7 +55,7 @@ export default function Room() {
     const newMessage: Message = {
       text: value,
       sender: { id: user?.id, name: user?.name },
-      toRoomId: params.roomId,
+      toRoomId: params?.roomId,
     };
     socket?.emit("message", newMessage);
     setMessages((prev) => [...prev, newMessage]);
