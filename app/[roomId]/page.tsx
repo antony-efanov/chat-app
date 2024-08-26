@@ -3,14 +3,14 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/utils/cn";
 import { useSocket } from "@/infrastructure/providers/SocketProvider";
-import { Badge } from "@/components/ui/badge";
-import { Textarea } from "@/components/ui/textarea";
-import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/Badge";
+import { Textarea } from "@/components/ui/Textarea";
+import { Button } from "@/components/ui/Button";
 import { signOut } from "next-auth/react";
-import { useCurrentUser } from "@/hooks/use-current-user";
-import { RoomsDialog } from "@/app/[roomId]/_components/rooms-dialog";
+import { useCurrentUser } from "@/hooks/useCurrentUser";
+import { RoomsDialog } from "@/app/[roomId]/_components/RoomsDialog";
 import { Message } from "@/types/Message";
-import { Chat } from "@/app/[roomId]/_components/chat";
+import { Chat } from "@/app/[roomId]/_components/Chat";
 import { useParams } from "next/navigation";
 
 export default function Room() {

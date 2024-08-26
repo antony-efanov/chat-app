@@ -2,7 +2,7 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ILoginSchema, LoginSchema } from "@/schemas";
-import { CardWrapper } from "@/components/auth/card-wrapper";
+import { CardWrapper } from "@/components/auth/CardWrapper";
 import { useForm } from "react-hook-form";
 
 import {
@@ -12,9 +12,9 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
+} from "@/components/ui/Form";
+import { Input } from "@/components/ui/Input";
+import { Button } from "@/components/ui/Button";
 import { login } from "@/actions/login";
 import { useTransition } from "react";
 

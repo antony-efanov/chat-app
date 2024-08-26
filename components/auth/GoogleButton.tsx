@@ -2,7 +2,7 @@
 
 import { signIn } from "next-auth/react";
 import { FcGoogle } from "react-icons/fc";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/Button";
 import { getDefaultRoomId } from "@/actions/getDefaultRoomId";
 
 export const GoogleButton = () => {

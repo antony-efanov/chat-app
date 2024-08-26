@@ -1,5 +1,5 @@
 import { v4 as uuid } from "uuid";
-import { getVerificationTokenByEmail } from "@/data/verification-token";
+import { getVerificationTokenByEmail } from "@/data/getVerificationTokenByEmail";
 import { db } from "@/lib/db";
 
 // TODO: Complete when do email verification

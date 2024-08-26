@@ -2,7 +2,7 @@
 
 import React from "react";
 import { useRouter } from "next/navigation";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/Button";
 import { getDefaultRoomId } from "@/actions/getDefaultRoomId";
 
 export default function Home() {

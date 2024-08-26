@@ -1,5 +1,5 @@
 import {Message} from "@/types/Message";
-import {SessionUser} from "@/hooks/use-current-user";
+import {SessionUser} from "@/hooks/useCurrentUser";
 
 export interface ServerToClientEvents {
     message: (message: Message) => void

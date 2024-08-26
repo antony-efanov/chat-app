@@ -3,7 +3,7 @@
 import { db } from "@/lib/db";
 import { Room } from "@prisma/client";
 
-export const getDefaultRoomId = async (): Promise<Room | null> => {
+export const getDefaultRoomId = async (): Promise<string | null> => {
   try {
     const room = (await db.room.findFirst({
       where: { id: "system-1" },
