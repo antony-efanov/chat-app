@@ -45,7 +45,7 @@ const ioHandler = (req: NextApiRequest, res: NextApiResponseServerIo) => {
       });
 
       socket.on("message", (message: Message) => {
-        socket.to(message.toRoomId).emit("message", message);
+        socket.broadcast.to(message.toRoomId).emit("message", message);
       });
     });
   }

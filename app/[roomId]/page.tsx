@@ -9,16 +9,16 @@ import { Button } from "@/components/ui/Button";
 import { signOut } from "next-auth/react";
 import { useCurrentUser } from "@/hooks/useCurrentUser";
 import { RoomsDialog } from "@/app/[roomId]/_components/RoomsDialog";
-import { Message } from "@/types/Message";
-import { Chat } from "@/app/[roomId]/_components/Chat";
 import { useParams } from "next/navigation";
+import { Chat } from "@/app/[roomId]/_components/Chat";
+import { Message } from "@/types/Message";
 
 export default function Room() {
   const messagesRef = useRef<HTMLDivElement | null>(null);
   const [messages, setMessages] = useState<Message[]>([]);
   const [value, setValue] = useState("");
   const { socket, isConnected } = useSocket();
-  const user = useCurrentUser();
+  const currentUser = useCurrentUser();
   const params = useParams();
 
   useEffect(() => {
@@ -26,9 +26,9 @@ export default function Room() {
       ? params?.roomId[0]
       : params?.roomId;
     if (roomId) {
-      socket?.emit("roomJoined", { roomId, user });
+      socket?.emit("roomJoined", { roomId, user: currentUser });
     }
-  }, [params?.roomId, socket, user]);
+  }, [params?.roomId, socket, currentUser]);
 
   const scrollToBottom = () => {
     if (messagesRef?.current) {
@@ -50,14 +50,16 @@ export default function Room() {
     });
 
     socket?.on("roomJoined", ({ roomId, user }) => {
-      setMessages((prev) => [...prev, {sender: "SYSTEM", toRoomId: roomId, text: `${user?.name} joined room`}])
+      if (user?.id !== currentUser?.id) {
+        setMessages((prev) => [...prev, {sender: "SYSTEM", toRoomId: roomId, text: `${user?.name} joined room`}])
+      }
     })
   }, [socket]);
 
   const sendMessage = useCallback(() => {
     const newMessage: Message = {
       text: value,
-      sender: { id: user?.id, name: user?.name },
+      sender: { id: currentUser?.id, name: currentUser?.name },
       toRoomId: params?.roomId as string,
     };
     socket?.emit("message", newMessage);
