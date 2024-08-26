@@ -26,7 +26,7 @@ export default function Room() {
       ? params?.roomId[0]
       : params?.roomId;
     if (roomId) {
-      socket?.emit("room joined", { roomId, user });
+      socket?.emit("roomJoined", { roomId, user });
     }
   }, [params?.roomId, socket, user]);
 
@@ -45,8 +45,7 @@ export default function Room() {
   };
 
   useEffect(() => {
-    socket?.on("message", (message: Message) => {
-      console.log(message);
+    socket?.on("message", (message) => {
       setMessages((prev) => [...prev, message]);
     });
   }, [socket]);
@@ -55,7 +54,7 @@ export default function Room() {
     const newMessage: Message = {
       text: value,
       sender: { id: user?.id, name: user?.name },
-      toRoomId: params?.roomId,
+      toRoomId: params?.roomId as string,
     };
     socket?.emit("message", newMessage);
     setMessages((prev) => [...prev, newMessage]);

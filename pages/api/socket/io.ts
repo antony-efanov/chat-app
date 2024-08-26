@@ -7,11 +7,11 @@ import { Room } from "@/types/Room";
 import { Message } from "@/types/Message";
 import { ClientToServerEvents, ServerToClientEvents } from "@/types/Socket";
 
-export const config = {
-  api: {
-    bodyParser: false,
-  },
-};
+// export const config = {
+//   api: {
+//     bodyParser: false,
+//   },
+// };
 
 const rooms: Room[] = [];
 
@@ -35,7 +35,7 @@ const ioHandler = (req: NextApiRequest, res: NextApiResponseServerIo) => {
 
       })
 
-      socket.on("room joined", ({ roomId, user }) => {
+      socket.on("roomJoined", ({ roomId, user }) => {
         const existingRoom = rooms.find((room) => room.id === roomId);
 
         const socketUser = {

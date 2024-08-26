@@ -12,8 +12,10 @@ import { io as ClientIO } from "socket.io-client";
 import { Socket } from "socket.io-client";
 import {ClientToServerEvents, ServerToClientEvents} from "@/types/Socket";
 
+type ClientSocket = Socket<ServerToClientEvents, ClientToServerEvents> | null
+
 type SocketContextType = {
-  socket: Socket<ServerToClientEvents, ClientToServerEvents> | null;
+  socket: ClientSocket;
   clientId: string | undefined;
   isConnected: boolean;
 };
@@ -29,7 +31,7 @@ export const useSocket = (): SocketContextType => {
 };
 
 export const SocketProvider = ({ children }: { children: ReactNode }) => {
-  const [socket, setSocket] = useState<Socket>(null);
+  const [socket, setSocket] = useState<ClientSocket>(null);
   const [clientId, setClientId] = useState<string | undefined>(undefined);
   const [isConnected, setIsConnected] = useState(false);
 
