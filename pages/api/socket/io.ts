@@ -7,12 +7,6 @@ import { Room } from "@/types/Room";
 import { Message } from "@/types/Message";
 import { ClientToServerEvents, ServerToClientEvents } from "@/types/Socket";
 
-// export const config = {
-//   api: {
-//     bodyParser: false,
-//   },
-// };
-
 const rooms: Room[] = [];
 
 const ioHandler = (req: NextApiRequest, res: NextApiResponseServerIo) => {
@@ -31,10 +25,6 @@ const ioHandler = (req: NextApiRequest, res: NextApiResponseServerIo) => {
 
     // Authorized user joins any chat room
     io.on("connection", (socket: Socket) => {
-      socket.on("hello", ({}) => {
-
-      })
-
       socket.on("roomJoined", ({ roomId, user }) => {
         const existingRoom = rooms.find((room) => room.id === roomId);
 
@@ -50,14 +40,12 @@ const ioHandler = (req: NextApiRequest, res: NextApiResponseServerIo) => {
         }
 
         socket.join(roomId);
+
+        socket.broadcast.to(roomId).emit("roomJoined", { roomId, user })
       });
 
       socket.on("message", (message: Message) => {
         socket.to(message.toRoomId).emit("message", message);
-      });
-
-      socket.on("disconnect", (reason) => {
-        // TODO: do something
       });
     });
   }

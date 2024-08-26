@@ -48,6 +48,10 @@ export default function Room() {
     socket?.on("message", (message) => {
       setMessages((prev) => [...prev, message]);
     });
+
+    socket?.on("roomJoined", ({ roomId, user }) => {
+      setMessages((prev) => [...prev, {sender: "SYSTEM", toRoomId: roomId, text: `${user?.name} joined room`}])
+    })
   }, [socket]);
 
   const sendMessage = useCallback(() => {
