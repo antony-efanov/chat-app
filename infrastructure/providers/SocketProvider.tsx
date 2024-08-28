@@ -10,7 +10,7 @@ import {
 
 import { io as ClientIO } from "socket.io-client";
 import { Socket } from "socket.io-client";
-import {ClientToServerEvents, ServerToClientEvents} from "@/types/Socket";
+import { ClientToServerEvents, ServerToClientEvents } from "@/types/Socket";
 
 type ClientSocket = Socket<ServerToClientEvents, ClientToServerEvents> | null
 
