@@ -7,7 +7,7 @@ const ioHandler = (req: NextApiRequest, res: NextApiResponseServerIo) => {
   if (!res.socket.server.io) {
     const httpServer: NetServer = res.socket.server as any;
 
-    new ServerSocket(httpServer)
+    new ServerSocket(httpServer);
   }
 
   res.end();
