@@ -6,10 +6,9 @@ import {
   CardContent,
   CardFooter,
   CardHeader,
-} from "@/components/ui/card";
-import { Header } from "@/components/auth/header";
-import { GoogleButton } from "@/components/auth/googleButton";
-import { BackButton } from "@/components/auth/back-button";
+} from "@/components/ui/Card";
+import { Header } from "@/components/auth/Header";
+import { BackButton } from "@/components/auth/BackButton";
 
 interface Props {
   children: ReactNode;

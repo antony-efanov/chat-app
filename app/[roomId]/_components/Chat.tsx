@@ -1,13 +1,11 @@
 "use client";
 
 import React, { forwardRef } from "react";
-import { useCurrentUser } from "@/hooks/use-current-user";
+import { useCurrentUser } from "@/hooks/useCurrentUser";
 import { Message } from "@/types/Message";
 
 export const Chat = forwardRef<HTMLDivElement, { messages: Message[] }>(
   ({ messages }, ref) => {
-    const user = useCurrentUser();
-
     return (
       <div
         ref={ref}
@@ -16,7 +14,7 @@ export const Chat = forwardRef<HTMLDivElement, { messages: Message[] }>(
       >
         {messages.map((message, index) => (
           <div key={index}>
-            <b>{user?.name}: </b>
+            <b>{message.sender === "SYSTEM" ? "System" : message.sender.name}: </b>
             <span>{message.text}</span>
           </div>
         ))}
