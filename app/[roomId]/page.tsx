@@ -13,6 +13,7 @@ import { useParams } from 'next/navigation';
 import { Chat } from '@/app/[roomId]/_components/Chat';
 import { Message } from '@/types/Message';
 import { observer } from 'mobx-react-lite';
+import { CreateRoomDialog } from '@/app/[roomId]/_components/CreateRoomDialog';
 
 function Room() {
     const messagesRef = useRef<HTMLDivElement | null>(null);
@@ -110,7 +111,6 @@ function Room() {
                     className="border-blue-300"
                     placeholder="Булкозавр..."
                 />
-                <RoomsDialog />
                 <Button
                     onClick={sendMessage}
                     variant="default"
@@ -118,6 +118,8 @@ function Room() {
                 >
                     Send
                 </Button>
+                <RoomsDialog />
+                <CreateRoomDialog />
             </div>
         </main>
     );
