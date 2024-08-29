@@ -1,3 +1,4 @@
+import React, { useState } from 'react';
 import {
     Dialog,
     DialogContent,
@@ -8,21 +9,17 @@ import {
     DialogTrigger,
 } from '@/components/ui/Dialog';
 import { Button } from '@/components/ui/Button';
-import React, { useState } from 'react';
 import { Input } from '@/components/ui/Input';
 import { Label } from '@/components/ui/Label';
 import { createRoom } from '@/actions/createRoom';
 import { useCurrentUser } from '@/hooks/useCurrentUser';
-import { redirect } from 'next/navigation';
 
 export const CreateRoomDialog = () => {
     const [value, setValue] = useState('');
     const user = useCurrentUser();
 
     const onClickHandler = () => {
-        createRoom(user?.id, value).finally((room) => {
-            redirect(`/${room?.id}`);
-        });
+        createRoom(user?.id!, value);
     };
 
     return (

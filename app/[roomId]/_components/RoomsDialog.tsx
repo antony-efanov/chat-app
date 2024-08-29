@@ -10,8 +10,8 @@ import {
 } from '@/components/ui/Dialog';
 import { Button } from '@/components/ui/Button';
 import { getRooms } from '@/actions/getRooms';
+import { useParams, useRouter } from 'next/navigation';
 import { Room } from '@prisma/client';
-import { useParams } from 'next/navigation';
 
 export const RoomsDialog = () => {
     const [rooms, setRooms] = useState<Room[] | null>([]);
@@ -38,7 +38,7 @@ export const RoomsDialog = () => {
                     <DialogDescription>
                         Search for room to chat
                     </DialogDescription>
-                    <div className="flex gap-1 rounded-md">
+                    <div className="flex flex-col gap-1 rounded-md">
                         {rooms?.map((room) => {
                             return <RoomComponent key={room.id} room={room} />;
                         })}
@@ -54,13 +54,20 @@ export const RoomsDialog = () => {
 
 const RoomComponent = ({ room }: { room: Room }) => {
     const params = useParams();
+    const router = useRouter();
 
-    console.log();
+    const onClickHandler = () => {
+        router.push(`/${room.id}`);
+    };
 
     return (
         <div className="w-full p-1.5 rounded-md bg-emerald-50 flex justify-between items-center">
             <span>{room.title}</span>
-            <Button variant="link" disabled={params?.roomId === room.id}>
+            <Button
+                onClick={onClickHandler}
+                variant="link"
+                disabled={params?.roomId === room.id}
+            >
                 {params?.roomId === room.id ? 'Joined' : 'Join'}
             </Button>
         </div>
