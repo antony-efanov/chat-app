@@ -44,9 +44,6 @@ export const RoomsDialog = () => {
                         })}
                     </div>
                 </DialogHeader>
-                <DialogFooter>
-                    <Button>Create room</Button>
-                </DialogFooter>
             </DialogContent>
         </Dialog>
     );

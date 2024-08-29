@@ -16,7 +16,7 @@ import { CreateRoomDialog } from '@/app/[roomId]/_components/CreateRoomDialog';
 import { observer } from 'mobx-react-lite';
 import { Room } from '@prisma/client';
 
-export const RoomComponent = observer(({ room }: { room: Room | null }) => {
+export const RoomComponent = observer(({ room }: { room: Room }) => {
     const messagesRef = useRef<HTMLDivElement | null>(null);
     const [messages, setMessages] = useState<Message[]>([]);
     const [value, setValue] = useState('');
@@ -98,7 +98,7 @@ export const RoomComponent = observer(({ room }: { room: Room | null }) => {
                 >
                     {isConnected ? 'Connected' : 'Not connected'}
                 </Badge>
-                <Badge>{room?.title}</Badge>
+                <h1 className="text-lg">{room?.title}</h1>
                 <Button onClick={() => signOut({ callbackUrl: '/auth/login' })}>
                     Sign out
                 </Button>

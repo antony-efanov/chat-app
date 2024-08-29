@@ -17,7 +17,15 @@ function RoomController() {
             .finally(() => setLoading(false));
     }, [params?.roomId]);
 
-    return <>{loading ? null : <RoomComponent room={room} />}</>;
+    return (
+        <>
+            {loading || !room ? (
+                <div>Loading...</div>
+            ) : (
+                <RoomComponent room={room} />
+            )}
+        </>
+    );
 }
 
 export default RoomController;
