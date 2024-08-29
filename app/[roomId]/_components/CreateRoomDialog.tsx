@@ -11,15 +11,25 @@ import {
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
 import { Label } from '@/components/ui/Label';
-import { createRoom } from '@/actions/createRoom';
+import { createRoom } from '@/actions/rooms/createRoom';
 import { useCurrentUser } from '@/hooks/useCurrentUser';
+import { useRouter } from 'next/navigation';
 
 export const CreateRoomDialog = () => {
     const [value, setValue] = useState('');
     const user = useCurrentUser();
+    const router = useRouter();
 
     const onClickHandler = () => {
-        createRoom(user?.id!, value);
+        createRoom(user?.id!, value)
+            .then((room) => {
+                console.log('>>>');
+                router.push(`/${room?.id}`);
+            })
+            .catch((error: Error) => {
+                setValue('');
+                alert(error.message);
+            });
     };
 
     return (

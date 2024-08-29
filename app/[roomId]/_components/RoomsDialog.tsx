@@ -9,7 +9,7 @@ import {
     DialogTrigger,
 } from '@/components/ui/Dialog';
 import { Button } from '@/components/ui/Button';
-import { getRooms } from '@/actions/getRooms';
+import { getRooms } from '@/actions/rooms/getRooms';
 import { useParams, useRouter } from 'next/navigation';
 import { Room } from '@prisma/client';
 
@@ -61,7 +61,7 @@ const RoomComponent = ({ room }: { room: Room }) => {
     };
 
     return (
-        <div className="w-full p-1.5 rounded-md bg-emerald-50 flex justify-between items-center">
+        <div className="w-full p-1.5 pl-4 rounded-md bg-emerald-50 flex justify-between items-center">
             <span>{room.title}</span>
             <Button
                 onClick={onClickHandler}
