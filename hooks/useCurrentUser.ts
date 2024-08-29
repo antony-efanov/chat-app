@@ -1,15 +1,15 @@
-import { useSession } from "next-auth/react";
+import { useSession } from 'next-auth/react';
 
 export interface SessionUser {
-  id: string;
-  name?: string | null;
-  email?: string | null;
+    id: string;
+    name?: string | null;
+    email?: string | null;
 }
 
-export const useCurrentUser = (): SessionUser | null => {
-  const { data: session } = useSession();
+export const useCurrentUser = (): SessionUser => {
+    const { data: session } = useSession();
 
-  const user = session?.user as SessionUser;
+    const user = session?.user as SessionUser;
 
-  return user ?? {};
+    return user as SessionUser;
 };
