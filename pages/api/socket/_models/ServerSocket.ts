@@ -1,10 +1,11 @@
-import { Server as HTTPServer } from 'http'
-import { Socket, Server, ServerOptions } from 'socket.io'
-import { ClientToServerEvents, ServerToClientEvents } from '@/types/Socket'
-import { Message } from '@/types/Message'
-import { Room } from '@/types/Room'
+import { Server as HTTPServer } from 'http';
+import { Socket, Server, ServerOptions } from 'socket.io';
+import { ClientToServerEvents, ServerToClientEvents } from '@/types/Socket';
+import { Message } from '@/types/Message';
+import { Room } from '@/types/Room';
+import { User } from '@/types/User';
 
-const rooms: Room[] = []
+const rooms: Room[] = [];
 
 const SERVER_OPTIONS: Partial<ServerOptions> = {
     path: '/api/socket/io',
@@ -16,52 +17,61 @@ const SERVER_OPTIONS: Partial<ServerOptions> = {
     cors: {
         origin: '*',
     },
-}
+};
 
 export class ServerSocket {
-    public static _instance: ServerSocket
-    public _io: Server
+    public static _instance: ServerSocket;
+    public _io: Server;
 
-    public _users: { [uid: string]: string }
+    public _users: { [uid: string]: string };
 
     constructor(server: HTTPServer) {
-        ServerSocket._instance = this
-        this._users = {}
+        ServerSocket._instance = this;
+        this._users = {};
         this._io = new Server<
             ClientToServerEvents,
             ServerToClientEvents,
             {},
             any
-        >(server, SERVER_OPTIONS)
+        >(server, SERVER_OPTIONS);
 
-        this._io.on('connect', this.startListeners)
+        this._io.on('connect', this.startListeners);
         this._io.engine.on('connection', (rawSocket) => {
-            rawSocket.request = null
-        })
+            rawSocket.request = null;
+        });
     }
 
     private startListeners = (socket: Socket): void => {
-        socket.on('roomJoined', ({ roomId, user }) => {
-            const existingRoom = rooms.find((room) => room.id === roomId)
+        socket.on(
+            'roomJoined',
+            ({ roomId, user }, callback: (usersInRoom: User[]) => void) => {
+                const existingRoom = rooms.find((room) => room.id === roomId);
 
-            const socketUser = {
-                id: user.id,
-                name: user.name,
+                console.log(user);
+
+                const socketUser = {
+                    id: user.id,
+                    name: user.name,
+                };
+
+                if (!existingRoom) {
+                    rooms.push({ id: roomId, users: [socketUser] });
+                    callback([socketUser]);
+                } else {
+                    existingRoom.users.push(socketUser);
+                    callback(existingRoom.users);
+                }
+
+                socket.join(roomId);
+
+                socket.broadcast
+                    .to(roomId)
+                    .emit('roomJoined', { roomId, user });
             }
-
-            if (!existingRoom) {
-                rooms.push({ id: roomId, users: [socketUser] })
-            } else {
-                existingRoom.users.push(socketUser)
-            }
-
-            socket.join(roomId)
-
-            socket.broadcast.to(roomId).emit('roomJoined', { roomId, user })
-        })
+        );
 
         socket.on('message', (message: Message) => {
-            socket.broadcast.to(message.toRoomId).emit('message', message)
-        })
-    }
+            socket.to(message.toRoomId).emit('message', message);
+        });
+    };
 }

@@ -27,7 +27,7 @@ export const RoomsDialog = () => {
             <DialogTrigger asChild>
                 <Button
                     variant="default"
-                    className="h-[60px] w-20 flex-shrink-0 bg-emerald-500 hover:bg-emerald-400"
+                    className="h-[60px] w-20 rounded-r-none flex-shrink-0 bg-emerald-500 hover:bg-emerald-400"
                 >
                     Rooms
                 </Button>

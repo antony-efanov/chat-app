@@ -23,8 +23,7 @@ export const CreateRoomDialog = () => {
     const onClickHandler = () => {
         createRoom(user?.id!, value)
             .then((room) => {
-                console.log('>>>');
-                router.push(`/${room?.id}`);
+                router.push(`/${room.id}`);
             })
             .catch((error: Error) => {
                 setValue('');
@@ -35,8 +34,8 @@ export const CreateRoomDialog = () => {
     return (
         <Dialog>
             <DialogTrigger asChild>
-                <Button className="h-[60px] w-30 flex-shrink-0 bg-cyan-500 hover:bg-cyan-400">
-                    Create room
+                <Button className="h-[60px] rounded-l-none flex-shrink-0 bg-cyan-500 hover:bg-cyan-400">
+                    Create
                 </Button>
             </DialogTrigger>
             <DialogContent className="sm:max-w-[425px]">
