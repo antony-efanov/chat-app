@@ -20,6 +20,7 @@ import { register } from '@/actions/auth/register';
 
 export const RegisterForm = () => {
     const [isPending, startTransition] = useTransition();
+
     const form = useForm<IRegisterSchema>({
         resolver: zodResolver(RegisterSchema),
         defaultValues: {
