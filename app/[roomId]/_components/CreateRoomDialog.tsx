@@ -14,6 +14,7 @@ import { Label } from '@/components/ui/Label';
 import { createRoom } from '@/actions/rooms/createRoom';
 import { useCurrentUser } from '@/hooks/useCurrentUser';
 import { useRouter } from 'next/navigation';
+import { PiShoppingCartSimpleBold } from 'react-icons/pi';
 
 export const CreateRoomDialog = () => {
     const [value, setValue] = useState('');
@@ -34,8 +35,8 @@ export const CreateRoomDialog = () => {
     return (
         <Dialog>
             <DialogTrigger asChild>
-                <Button className="h-[60px] rounded-l-none flex-shrink-0 bg-cyan-500 hover:bg-cyan-400">
-                    Create
+                <Button className="rounded-l-none flex-shrink-0 bg-cyan-500 hover:bg-cyan-400">
+                    <PiShoppingCartSimpleBold />
                 </Button>
             </DialogTrigger>
             <DialogContent className="sm:max-w-[425px]">

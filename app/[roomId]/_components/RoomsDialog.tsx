@@ -12,6 +12,7 @@ import { Button } from '@/components/ui/Button';
 import { getRooms } from '@/actions/rooms/getRooms';
 import { useParams, useRouter } from 'next/navigation';
 import { Room } from '@prisma/client';
+import { BsDoorOpen } from 'react-icons/bs';
 
 export const RoomsDialog = () => {
     const [rooms, setRooms] = useState<Room[] | null>([]);
@@ -27,9 +28,9 @@ export const RoomsDialog = () => {
             <DialogTrigger asChild>
                 <Button
                     variant="default"
-                    className="h-[60px] w-20 rounded-r-none flex-shrink-0 bg-emerald-500 hover:bg-emerald-400"
+                    className="rounded-r-none flex-shrink-0 bg-emerald-500 hover:bg-emerald-400"
                 >
-                    Rooms
+                    <BsDoorOpen />
                 </Button>
             </DialogTrigger>
             <DialogContent className="sm:max-w-[425px]">

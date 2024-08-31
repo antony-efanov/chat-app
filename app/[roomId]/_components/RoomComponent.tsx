@@ -10,6 +10,7 @@ import { cn } from '@/lib/utils/cn';
 import { Button } from '@/components/ui/Button';
 import { signOut } from 'next-auth/react';
 import { Chat } from '@/app/[roomId]/_components/Chat';
+import { TextareaAutosize } from '@mui/base/TextareaAutosize';
 import { Textarea } from '@/components/ui/Textarea';
 import { RoomsDialog } from '@/app/[roomId]/_components/RoomsDialog';
 import { CreateRoomDialog } from '@/app/[roomId]/_components/CreateRoomDialog';
@@ -115,21 +116,13 @@ export const RoomComponent = observer(
                     </div>
                 </div>
                 <div className="flex w-full gap-4">
-                    <Textarea
-                        onKeyDown={handleKeyDown}
+                    <TextareaAutosize
                         value={value}
                         onChange={(e) => setValue(e.target.value)}
-                        style={{ resize: 'none' }}
-                        className="border-blue-300"
-                        placeholder="Булкозавр..."
+                        className="w-full resize-none text-sm font-sans font-normal leading-5 px-3 py-2 rounded-lg border border-solid border-slate-300 hover:border-purple-500 dark:hover:border-purple-500 focus:border-purple-500 dark:focus:border-purple-500 dark:border-slate-600 bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-300 focus-visible:outline-0 box-border"
+                        placeholder="Message"
+                        maxRows={4}
                     />
-                    <Button
-                        onClick={sendMessage}
-                        variant="default"
-                        className="h-[60px] w-20 flex-shrink-0"
-                    >
-                        Send
-                    </Button>
                     <div className="flex">
                         <RoomsDialog />
                         <CreateRoomDialog />
